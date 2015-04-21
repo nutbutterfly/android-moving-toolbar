@@ -1,6 +1,5 @@
 package com.iamnbty.movingtoolbar;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -15,17 +14,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity implements NotifyScrollView.Callback {
+public class MainActivity extends ActionBarActivity implements ObservableScrollView.Callback {
 
-    private NotifyScrollView mNotifyScrollView;
+    private ObservableScrollView mScrollView;
 
-    private FrameLayout mImageFrameLayout;
     private ImageView mImageView;
+    private FrameLayout mImageFrameLayout;
+
+    private Toolbar mToolbar;
+    private LinearLayout mToolbarLinearLayout;
 
     private LinearLayout mContentLinearLayout;
 
-    private LinearLayout mToolbarLinearLayout;
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +35,25 @@ public class MainActivity extends ActionBarActivity implements NotifyScrollView.
         setContentView(R.layout.activity_main);
 
         // view matching
-        mNotifyScrollView = (NotifyScrollView) findViewById(R.id.notify_scroll_view);
+        mScrollView = (ObservableScrollView) findViewById(R.id.notify_scroll_view);
 
-        mImageFrameLayout = (FrameLayout) findViewById(R.id.image_frame_layout);
         mImageView = (ImageView) findViewById(R.id.image_view);
+        mImageFrameLayout = (FrameLayout) findViewById(R.id.image_frame_layout);
 
         mContentLinearLayout = (LinearLayout) findViewById(R.id.content_linear_layout);
 
-        mToolbarLinearLayout = (LinearLayout) findViewById(R.id.toolbar_linear_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbarLinearLayout = (LinearLayout) findViewById(R.id.toolbar_linear_layout);
 
         // more setup
-        setupNotifyScrollView();
+        setupScrollView();
         setupToolbar();
     }
 
-    private void setupNotifyScrollView() {
-        mNotifyScrollView.setCallback(this);
+    private void setupScrollView() {
+        mScrollView.setCallback(this);
 
-        ViewTreeObserver viewTreeObserver = mNotifyScrollView.getViewTreeObserver();
+        ViewTreeObserver viewTreeObserver = mScrollView.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -87,10 +87,11 @@ public class MainActivity extends ActionBarActivity implements NotifyScrollView.
         // set ActionBar as Toolbar
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.color_accent));
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -98,19 +99,14 @@ public class MainActivity extends ActionBarActivity implements NotifyScrollView.
     @Override
     public void onScrollChanged(int left, int top, int oldLeft, int oldTop) {
         // get scroll y
-        int scrollY = mNotifyScrollView.getScrollY();
+        int scrollY = mScrollView.getScrollY();
 
-        // calculate new y (for toolbar translation)
+        // choose appropriate y
         float newY = Math.max(mImageView.getHeight(), scrollY);
 
-        // translate toolbar linear layout and image frame layout
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            mToolbarLinearLayout.setTranslationY(newY);
-            mImageFrameLayout.setTranslationY(scrollY * 0.5f);
-        } else {
-            ViewCompat.setTranslationY(mToolbarLinearLayout, newY);
-            ViewCompat.setTranslationY(mImageFrameLayout, scrollY * 0.5f);
-        }
+        // translate image and toolbar
+        ViewCompat.setTranslationY(mToolbarLinearLayout, newY);
+        ViewCompat.setTranslationY(mImageFrameLayout, scrollY * 0.5f);
     }
 
     @Override

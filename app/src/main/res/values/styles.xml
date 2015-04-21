@@ -1,17 +1,11 @@
 <resources>
 
-    <style name="AppTheme" parent="MainTheme">
-
-    </style>
-
-    <style name="MainTheme" parent="Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
 
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
-
-        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
     </style>
 
 </resources>

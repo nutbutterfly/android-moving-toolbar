@@ -1,4 +1,4 @@
-<com.iamnbty.movingtoolbar.NotifyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.iamnbty.movingtoolbar.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/notify_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,10 +18,10 @@
             <ImageView
                 android:id="@+id/image_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_thumbnail"
+                android:layout_height="300dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
+                android:src="@drawable/ic_thumbnail"
                 android:contentDescription="@string/app_name" />
 
         </FrameLayout>
@@ -39,7 +39,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/loerm"
                 android:textColor="@color/color_text"
-                android:id="@+id/content_textview" />
+                android:id="@+id/content_text_view"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
         </LinearLayout>
 
@@ -53,10 +57,13 @@
             android:clipToPadding="false"
             android:background="@color/color_primary">
 
-            <include layout="@layout/include_toolbar" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
     </FrameLayout>
 
-</com.iamnbty.movingtoolbar.NotifyScrollView>
+</com.iamnbty.movingtoolbar.ObservableScrollView>

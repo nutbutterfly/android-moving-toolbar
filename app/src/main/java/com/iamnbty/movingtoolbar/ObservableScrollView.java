@@ -4,19 +4,19 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
 
-public class NotifyScrollView extends ScrollView {
+public class ObservableScrollView extends ScrollView {
 
     private Callback callback;
 
-    public NotifyScrollView(Context context) {
+    public ObservableScrollView(Context context) {
         super(context);
     }
 
-    public NotifyScrollView(Context context, AttributeSet attrs) {
+    public ObservableScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public NotifyScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ObservableScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
