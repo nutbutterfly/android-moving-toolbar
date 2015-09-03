@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android.MovingToolbar.iml" filepath="$PROJECT_DIR$/Android.MovingToolbar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-moving-toolbar.iml" filepath="$PROJECT_DIR$/android-moving-toolbar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
-

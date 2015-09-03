@@ -1,6 +1,6 @@
-Android.MovingToolbar
+android-moving-toolbar
 =====================
 
-Test Android Toolbar API with Translation Effect.
+Translate Toolbar using standard API.
 
 <img src="art/moving_toolbar.gif" />

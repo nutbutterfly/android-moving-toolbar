@@ -2,11 +2,10 @@ package com.iamnbty.movingtoolbar;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -14,14 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity implements ObservableScrollView.Callback {
+public class MainActivity extends AppCompatActivity implements ObservableScrollView.Callback {
 
     private ObservableScrollView mScrollView;
 
     private ImageView mImageView;
     private FrameLayout mImageFrameLayout;
 
-    private Toolbar mToolbar;
     private LinearLayout mToolbarLinearLayout;
 
     private LinearLayout mContentLinearLayout;
@@ -42,12 +40,14 @@ public class MainActivity extends ActionBarActivity implements ObservableScrollV
 
         mContentLinearLayout = (LinearLayout) findViewById(R.id.content_linear_layout);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbarLinearLayout = (LinearLayout) findViewById(R.id.toolbar_linear_layout);
 
-        // more setup
+        // setup Toolbar
+        setSupportActionBar(toolbar);
+
+        // setup ScrollView
         setupScrollView();
-        setupToolbar();
     }
 
     private void setupScrollView() {
@@ -81,19 +81,6 @@ public class MainActivity extends ActionBarActivity implements ObservableScrollV
                 }
             });
         }
-    }
-
-    private void setupToolbar() {
-        // set ActionBar as Toolbar
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setTitleTextColor(getResources().getColor(R.color.color_accent));
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
     }
 
     @Override

@@ -34,7 +34,7 @@ public class ObservableScrollView extends ScrollView {
 
     public interface Callback {
 
-        public void onScrollChanged(int left, int top, int oldLeft, int oldTop);
+        void onScrollChanged(int left, int top, int oldLeft, int oldTop);
 
     }
 

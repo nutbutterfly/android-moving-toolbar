@@ -5,9 +5,9 @@
     android:background="@color/color_background">
 
     <FrameLayout
-        android:clipChildren="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false">
 
         <!-- Image Layout -->
         <FrameLayout
@@ -20,9 +20,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_thumbnail"
-                android:contentDescription="@string/app_name" />
+                android:src="@drawable/ic_thumbnail" />
 
         </FrameLayout>
 
@@ -31,19 +31,19 @@
             android:id="@+id/content_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/color_background">
+            android:background="@color/color_background"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/content_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/loerm"
-                android:textColor="@color/color_text"
-                android:id="@+id/content_text_view"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/loerm"
+                android:textColor="@color/color_text" />
 
         </LinearLayout>
 
@@ -52,10 +52,10 @@
             android:id="@+id/toolbar_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:background="@color/color_primary"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:background="@color/color_primary">
+            android:orientation="vertical">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
