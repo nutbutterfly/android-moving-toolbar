@@ -23,7 +23,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_thumbnail" />
+                android:src="@drawable/bg_mountain" />
 
         </FrameLayout>
 
