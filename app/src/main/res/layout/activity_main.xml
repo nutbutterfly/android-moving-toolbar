@@ -1,24 +1,25 @@
-<com.iamnbty.movingtoolbar.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/notify_scroll_view"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nested_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background">
+    android:background="@color/colorBackground">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false">
 
-        <!-- Image Layout -->
+        <!-- image -->
         <FrameLayout
-            android:id="@+id/image_frame_layout"
+            android:id="@+id/image_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/image_view"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="192dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
@@ -26,33 +27,32 @@
 
         </FrameLayout>
 
-        <!-- Content Layout -->
+        <!-- content -->
         <LinearLayout
-            android:id="@+id/content_linear_layout"
+            android:id="@+id/content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_background"
+            android:background="@color/colorBackground"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/content_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/loerm"
-                android:textColor="@color/color_text" />
+                android:text="@string/lorem"
+                android:textColor="@color/colorText" />
 
         </LinearLayout>
 
-        <!-- Toolbar Layout -->
+        <!-- toolbar -->
         <LinearLayout
-            android:id="@+id/toolbar_linear_layout"
+            android:id="@+id/toolbar_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_primary"
+            android:background="@color/colorPrimary"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical">
@@ -60,10 +60,11 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:contentInsetStart="72dp" />
 
         </LinearLayout>
 
     </FrameLayout>
 
-</com.iamnbty.movingtoolbar.ObservableScrollView>
+</android.support.v4.widget.NestedScrollView>

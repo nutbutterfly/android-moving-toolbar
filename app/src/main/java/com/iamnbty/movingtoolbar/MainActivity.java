@@ -2,28 +2,28 @@ package com.iamnbty.movingtoolbar;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements ObservableScrollView.Callback {
+public class MainActivity extends AppCompatActivity implements NestedScrollView.OnScrollChangeListener {
 
-    private ObservableScrollView mScrollView;
+    private NestedScrollView mNestedScrollView;
 
     private ImageView mImageView;
-    private FrameLayout mImageFrameLayout;
+    private View mImageContainer;
 
-    private LinearLayout mToolbarLinearLayout;
-
-    private LinearLayout mContentLinearLayout;
-
+    private View mToolbarContainer;
+    private LinearLayout mContentLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,67 +33,56 @@ public class MainActivity extends AppCompatActivity implements ObservableScrollV
         setContentView(R.layout.activity_main);
 
         // view matching
-        mScrollView = (ObservableScrollView) findViewById(R.id.notify_scroll_view);
-
+        mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
         mImageView = (ImageView) findViewById(R.id.image_view);
-        mImageFrameLayout = (FrameLayout) findViewById(R.id.image_frame_layout);
+        mImageContainer = findViewById(R.id.image_container);
+        mContentLayout = (LinearLayout) findViewById(R.id.content_layout);
+        mToolbarContainer = findViewById(R.id.toolbar_container);
 
-        mContentLinearLayout = (LinearLayout) findViewById(R.id.content_linear_layout);
+        // setup toolbar
+        setupToolbar();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbarLinearLayout = (LinearLayout) findViewById(R.id.toolbar_linear_layout);
-
-        // setup Toolbar
-        setSupportActionBar(toolbar);
-
-        // setup ScrollView
-        setupScrollView();
+        // setup nested scroll view
+        setupNestedScrollView();
     }
 
-    private void setupScrollView() {
-        mScrollView.setCallback(this);
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(new DrawerArrowDrawable(this));
+        setSupportActionBar(toolbar);
+    }
 
-        ViewTreeObserver viewTreeObserver = mScrollView.getViewTreeObserver();
+    private void setupNestedScrollView() {
+        mNestedScrollView.setOnScrollChangeListener(this);
+
+        ViewTreeObserver viewTreeObserver = mNestedScrollView.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
                     // get size
-                    int toolbarLinearLayoutHeight = mToolbarLinearLayout.getHeight();
+                    int toolbarLinearLayoutHeight = mToolbarContainer.getHeight();
                     int imageHeight = mImageView.getHeight();
 
                     // adjust image frame layout height
-                    ViewGroup.LayoutParams layoutParams = mImageFrameLayout.getLayoutParams();
+                    ViewGroup.LayoutParams layoutParams = mImageContainer.getLayoutParams();
                     if (layoutParams.height != imageHeight) {
                         layoutParams.height = imageHeight;
-                        mImageFrameLayout.setLayoutParams(layoutParams);
+                        mImageContainer.setLayoutParams(layoutParams);
                     }
 
                     // adjust top margin of content linear layout
-                    ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) mContentLinearLayout.getLayoutParams();
+                    ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) mContentLayout.getLayoutParams();
                     if (marginLayoutParams.topMargin != toolbarLinearLayoutHeight + imageHeight) {
                         marginLayoutParams.topMargin = toolbarLinearLayoutHeight + imageHeight;
-                        mContentLinearLayout.setLayoutParams(marginLayoutParams);
+                        mContentLayout.setLayoutParams(marginLayoutParams);
                     }
 
                     // call onScrollChange to update initial properties.
-                    onScrollChanged(0, 0, 0, 0);
+                    onScrollChange(mNestedScrollView, 0, 0, 0, 0);
                 }
             });
         }
-    }
-
-    @Override
-    public void onScrollChanged(int left, int top, int oldLeft, int oldTop) {
-        // get scroll y
-        int scrollY = mScrollView.getScrollY();
-
-        // choose appropriate y
-        float newY = Math.max(mImageView.getHeight(), scrollY);
-
-        // translate image and toolbar
-        ViewCompat.setTranslationY(mToolbarLinearLayout, newY);
-        ViewCompat.setTranslationY(mImageFrameLayout, scrollY * 0.5f);
     }
 
     @Override
@@ -112,6 +101,16 @@ public class MainActivity extends AppCompatActivity implements ObservableScrollV
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        // choose appropriate y
+        float newY = Math.max(mImageView.getHeight(), scrollY);
+
+        // translate image and toolbar
+        ViewCompat.setTranslationY(mToolbarContainer, newY);
+        ViewCompat.setTranslationY(mImageContainer, scrollY * 0.5f);
     }
 
 }

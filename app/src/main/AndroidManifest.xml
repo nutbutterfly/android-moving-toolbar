@@ -10,7 +10,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name="com.iamnbty.movingtoolbar.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
